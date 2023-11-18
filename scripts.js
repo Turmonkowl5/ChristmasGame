@@ -139,7 +139,7 @@ let currentLevel = 0;
 let totalLevels = levels.length / 2;
 // Creat image
 let image = new Image();
-image.src = "/images/testSheet.png";
+image.src = "images/testSheet.png";
 image.addEventListener("load",loadHandler, false);
 assetsToLoad.push(image);
 // Create backgroun
