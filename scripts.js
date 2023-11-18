@@ -256,19 +256,22 @@ function playGame(){
             starsCollected ++;
             stars[i].visible = false;
         }
-        else if(aRot >= 45){
-            rF = false;            
+        if(stars[i].visible){
+            if(aRot >= 45){
+                rF = false;            
+            }
+            else if(aRot <= -45){
+                rF = true;
+            }
+            if(rF){
+                aRot += 0.1;
+            }
+            else{
+                aRot -= 0.1;
+            }
+            stars[i].rotation = aRot;
         }
-        else if(aRot <= -45){
-            rF = true;
-        }
-        if(rF){
-            aRot += 0.1;
-        }
-        else{
-            aRot -= 0.1;
-        }
-        stars[i].rotation = aRot;
+        
     }
     if(starsCollected === stars.length && currentLevel != totalLevels){
         currentLevel += 2;
@@ -318,7 +321,7 @@ function buildMap(array){
     gameState = PLAYING;
 }
 function endGame(){
-    output.innerHTML = "You Won!";
+    output.innerHTML = "Happy Holidays";
     render();
 }
 function render(){

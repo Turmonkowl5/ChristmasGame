@@ -6,10 +6,14 @@
 }
 #gameMessage{
     position: fixed;
-    top: 3%;
-    left: 35%;
+    margin: auto;
+    top: 7%;
+    left: 29%;
     font-size: 128px;
-    color: rgb(64, 232, 70);
-    background-color: rgba(128, 30, 0, 0.722);
+    color: rgb(154, 37, 24);
+    background-color: rgba(14, 231, 3, 0.722);
     border-radius: 30px;
+}
+body{
+    background-color:cadetblue
 }
