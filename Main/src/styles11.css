@@ -1,0 +1,15 @@
+#stage{
+    border: dashed 1px black;
+    margin: auto;
+    position: relative;
+    height: 768;
+}
+#gameMessage{
+    position: fixed;
+    top: 3%;
+    left: 35%;
+    font-size: 128px;
+    color: rgb(64, 232, 70);
+    background-color: rgba(128, 30, 0, 0.722);
+    border-radius: 30px;
+}
