@@ -139,7 +139,7 @@ let currentLevel = 0;
 let totalLevels = levels.length / 2;
 // Creat image
 let image = new Image();
-image.src = "images/testSheet.png";
+image.src = "../images/testSheet.png";
 image.addEventListener("load",loadHandler, false);
 assetsToLoad.push(image);
 // Create backgroun
@@ -222,16 +222,10 @@ function playGame(){
     // Check for box collision
     for(let i = 0; i < ices.length; i ++){
         let collSide = blockRectangle(tree,ices[i], false);
-            if(collSide === "bottom"){
+            if(collSide === "bottom" && tree.vy >0){
                 tree.isOnGround = true;
                 tree.vy = -tree.gravity;
                 // console.log(tree.vy);
-            }
-            else if(collSide === "left" && tree.vx <= 0){
-                tree.vx = 0;
-            }
-            else if(collSide === "right" && tree.vx >= 0){
-                tree.vx = 0;
             }
             if(collSide !== "bottom" && tree.vy > 0){
                 tree.isOnGround = false;
