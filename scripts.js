@@ -139,17 +139,11 @@ let currentLevel = 0;
 let totalLevels = levels.length / 2;
 // Creat image
 let image = new Image();
-image.src = "images/testSheet.png";
+image.src = "images/lastSpriteSheet.png";
 image.addEventListener("load",loadHandler, false);
 assetsToLoad.push(image);
 // Create backgroun
-let background = Object.create(spriteObject);
-background.sourceX = 128;
-background.sourceWidth = 1024;
-background.sourceHeight = 454;
-background.width = 1024;
-background.height = 768;
-sprites.push(background);
+let background = null;
 // Create Player
 let tree = null;
 // star
@@ -176,9 +170,9 @@ function update(){
             ices = [];
             sprites = [];
             background = Object.create(spriteObject);
-            background.sourceX = 128;
+            background.sourceX = 0;
             background.sourceWidth = 1024;
-            background.sourceHeight = 454;
+            background.sourceHeight = 1024;
             background.width = 1024;
             background.height = 768;
             sprites.push(background);
@@ -292,6 +286,7 @@ function buildMap(array){
                 switch(tile){
                     case TREE:
                         tree = Object.create(spriteObject);
+                        tree.sourceX = 1024;
                         tree.x = column * SIZE;
                         tree.y = row * SIZE;
                         tree.isOnGround = true;
@@ -299,6 +294,7 @@ function buildMap(array){
                         break;
                     case ICE:
                         let ice = Object.create(spriteObject);
+                        ice.sourceX = 1024;
                         ice.sourceY = 64;
                         ice.x = column * SIZE;
                         ice.y = row * SIZE;
@@ -307,7 +303,7 @@ function buildMap(array){
                         break;
                     case STAR:
                         star = Object.create(spriteObject);
-                        star.sourceX = 64;
+                        star.sourceX = 1088;
                         star.x = column * SIZE;
                         star.y = row * SIZE;
                         star.rotation = 90;
