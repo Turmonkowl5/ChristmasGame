@@ -14,12 +14,9 @@ let sprites = [];
 let assetsToLoad = [];
 let ices = [];
 let stars = [];
-let levels =[];
 //! Game Variables
 let assetsLoaded = 0;
 let starsCollected = 0;
-let aRot = 0;
-let rF = true;
 // GameStates
 let LOADING = 0;
 let PLAYING = 1;
@@ -75,20 +72,19 @@ let ROWS = 12;
 let COLUMNS = 16;
 let SIZE = 64;
 let map1 = [
-    [0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [1,1,2,0,1,1,0,0,1,0,0,2,0,0,0,0],
-    [0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
+    [1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0],
+    [1,1,2,0,1,1,0,1,1,1,0,2,0,0,0,0],
+    [0,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0],
     [2,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
     [1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1],
-    [1,1,0,0,0,0,0,1,1,1,0,0,1,0,0,1],
-    [1,1,1,0,0,0,0,1,1,1,1,0,1,1,0,1],
-    [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,0,0,0,0,1,1,1,1,0,0,0,2,1,1],
+    [1,1,1,2,0,0,0,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1],
     [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1]
 ];
-levels.push(map1);
 let objects1 = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -104,39 +100,6 @@ let objects1 = [
     [0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0]
 
 ];
-levels.push(objects1);
-let map2 = [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1],
-    [0,0,0,1,0,0,1,1,1,0,2,1,0,0,0,1],
-    [2,0,0,0,0,0,0,0,0,0,0,1,2,1,1,1],
-    [1,1,0,0,1,0,0,0,0,0,0,0,1,1,0,0],
-    [0,0,0,2,1,0,0,0,0,1,0,0,0,0,0,0],
-    [0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0],
-    [1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0],
-    [1,1,0,0,0,0,2,1,0,0,0,0,0,0,2,1],
-    [1,1,1,1,0,0,1,1,0,0,0,0,0,0,1,1],
-    [0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1],
-    [0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1]
-];
-levels.push(map2);
-let objects2 = [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0],
-];
-levels.push(objects2);
-let currentLevel = 0;
-let totalLevels = levels.length / 2;
 // Creat image
 let image = new Image();
 image.src = "images/lastSpriteSheet.png";
@@ -170,14 +133,13 @@ function update(){
             ices = [];
             sprites = [];
             background = Object.create(spriteObject);
-            background.sourceX = 0;
             background.sourceWidth = 1024;
-            background.sourceHeight = 1024;
+            background.sourceHeight = 763;
             background.width = 1024;
             background.height = 768;
             sprites.push(background);
-            buildMap(levels[currentLevel]);
-            buildMap(levels[currentLevel + 1]);
+            buildMap(map1);
+            buildMap(objects1);
     }
 }
 // Called when things are loaded
@@ -224,7 +186,6 @@ function playGame(){
             if(collSide !== "bottom" && tree.vy > 0){
                 tree.isOnGround = false;
             }
-            // console.log(tree.vy);
     } 
         // Set screen boundries and bounce
     // Right
@@ -246,32 +207,29 @@ function playGame(){
     //! Stars
     // Check if touching stars
     for(let i = 0; i < stars.length; i ++){
-        if(hitTestRectangle(tree,stars[i]) && stars[i].visible){
+        let star = stars[i];
+        if(hitTestRectangle(tree,star) && star.visible){
             starsCollected ++;
-            stars[i].visible = false;
+            star.visible = false;
         }
-        if(stars[i].visible){
-            if(aRot >= 45){
-                rF = false;            
+        if(star.visible){
+            if(star.aRot >= 45){
+                star.rF = false;            
             }
-            else if(aRot <= -45){
-                rF = true;
+            else if(star.aRot <= -45){
+                star.rF = true;
             }
-            if(rF){
-                aRot += 0.1;
+            if(star.rF){
+                star.aRot += 0.7;
             }
             else{
-                aRot -= 0.1;
+                star.aRot -= 0.7;
             }
-            stars[i].rotation = aRot;
+            star.rotation = star.aRot;
         }
         
     }
-    if(starsCollected === stars.length && currentLevel != totalLevels){
-        currentLevel += 2;
-        gameState = BUILDING;
-    }
-    else if(starsCollected === stars.length && currentLevel === totalLevels){
+    if(starsCollected === stars.length){
         gameState = OVER;
     }
 }

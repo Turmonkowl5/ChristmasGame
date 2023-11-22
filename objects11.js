@@ -10,13 +10,11 @@ let spriteObject = {
     vx: 0,
     vy: 0,
     visible: true,
+    aRot: 0,
+    rf: true,
     rotation: 0,
     // Physics Properties
-    accelerationX: 0,
-    accelerationY: 0,
     speedLimit: 3,
-    friction: 0.7,
-    bounce: -0.10,
     gravity: 0.7,
     // Platform game properties
     isOnGround: undefined,
