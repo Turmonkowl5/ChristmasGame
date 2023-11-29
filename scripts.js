@@ -102,7 +102,7 @@ let objects1 = [
 ];
 // Creat image
 let image = new Image();
-image.src = "images/lastSpriteSheet.png";
+image.src = "images/frfrLastSpriteSheet.png";
 image.addEventListener("load",loadHandler, false);
 assetsToLoad.push(image);
 // Create backgroun
@@ -244,7 +244,7 @@ function buildMap(array){
                 switch(tile){
                     case TREE:
                         tree = Object.create(spriteObject);
-                        tree.sourceX = 1024;
+                        tree.sourceX = 1152;
                         tree.x = column * SIZE;
                         tree.y = row * SIZE;
                         tree.isOnGround = true;
