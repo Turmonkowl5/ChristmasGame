@@ -13,10 +13,10 @@ let output = document.querySelector("#gameMessage");
 let sprites = [];
 let assetsToLoad = [];
 let ices = [];
-let stars = [];
+let faces = [];
 //! Game Variables
 let assetsLoaded = 0;
-let starsCollected = 0;
+let facesCollected = 0;
 // GameStates
 let LOADING = 0;
 let PLAYING = 1;
@@ -66,8 +66,9 @@ window.addEventListener("keyup", function(event){
 // Map 
 let EMPTY = 0;
 let ICE = 1;
-let STAR = 2;
-let TREE = 3;
+let FACE = 2;
+let faceNum = 0;
+let SLEIGH = 3;
 let ROWS = 12;
 let COLUMNS = 16;
 let SIZE = 64;
@@ -108,10 +109,10 @@ assetsToLoad.push(image);
 // Create backgroun
 let background = null;
 // Create Player
-let tree = null;
-// star
-let star = null;
-// Start update loop
+let sleigh = null;
+// face
+let face = null;
+// facet update loop
 update();
 // ! Functions
 function update(){
@@ -128,8 +129,8 @@ function update(){
             endGame();
             break;
         case BUILDING:
-            stars = [];
-            starsCollected = 0;
+            faces = [];
+            facesCollected = 0;
             ices = [];
             sprites = [];
             background = Object.create(spriteObject);
@@ -153,83 +154,83 @@ function loadHandler(){
 function playGame(){
     //! Movement code
     if(moveLeft && !moveRight){
-        tree.vx = -accel;
+        sleigh.vx = -accel;
     }
     if(moveRight && !moveLeft){
-        tree.vx = accel;
+        sleigh.vx = accel;
     }
-    if(jump && tree.isOnGround){
-        tree.vy += tree.jumpForce;
-        tree.isOnGround = false;
+    if(jump && sleigh.isOnGround){
+        sleigh.vy += sleigh.jumpForce;
+        sleigh.isOnGround = false;
     }
     // Checks for no movement
     if(!moveLeft && !moveRight){
-        tree.vx = 0;
+        sleigh.vx = 0;
     }
     // Apply gravity
-    tree.vy += tree.gravity;
+    sleigh.vy += sleigh.gravity;
     // Limit the top speed
-    if(tree.vy > tree.speedLimit * 2){
-        tree.vy = tree.speedLimit * 2;
+    if(sleigh.vy > sleigh.speedLimit * 2){
+        sleigh.vy = sleigh.speedLimit * 2;
     }
     // Apply movement
-    tree.x += tree.vx;
-    tree.y += tree.vy;
+    sleigh.x += sleigh.vx;
+    sleigh.y += sleigh.vy;
     // Check for box collision
     for(let i = 0; i < ices.length; i ++){
-        let collSide = blockRectangle(tree,ices[i], false);
-            if(collSide === "bottom" && tree.vy >0){
-                tree.isOnGround = true;
-                tree.vy = -tree.gravity;
-                // console.log(tree.vy);
+        let collSide = blockRectangle(sleigh,ices[i], false);
+            if(collSide === "bottom" && sleigh.vy >0){
+                sleigh.isOnGround = true;
+                sleigh.vy = -sleigh.gravity;
+                // console.log(sleigh.vy);
             }
-            if(collSide !== "bottom" && tree.vy > 0){
-                tree.isOnGround = false;
+            if(collSide !== "bottom" && sleigh.vy > 0){
+                sleigh.isOnGround = false;
             }
     } 
         // Set screen boundries and bounce
     // Right
-    if(tree.x < 0){
-        tree.x = 0;
-        tree.vx = 0;
+    if(sleigh.x < 0){
+        sleigh.x = 0;
+        sleigh.vx = 0;
     }
     // Left
-    if(tree.x > canvas.width - tree.width){
-        tree.x = canvas.width - tree.width;
-        tree.vx = 0;
+    if(sleigh.x > canvas.width - sleigh.width){
+        sleigh.x = canvas.width - sleigh.width;
+        sleigh.vx = 0;
     }
     // Bottom
-    if(tree.y > canvas.height - tree.height){
-        tree.y = canvas.height - tree.height;
-        tree.isOnGround = true;
-        tree.vy = -tree.gravity;
+    if(sleigh.y > canvas.height - sleigh.height){
+        sleigh.y = canvas.height - sleigh.height;
+        sleigh.isOnGround = true;
+        sleigh.vy = -sleigh.gravity;
     }
-    //! Stars
-    // Check if touching stars
-    for(let i = 0; i < stars.length; i ++){
-        let star = stars[i];
-        if(hitTestRectangle(tree,star) && star.visible){
-            starsCollected ++;
-            star.visible = false;
+    //! faces
+    // Check if touching faces
+    for(let i = 0; i < faces.length; i ++){
+        let face = faces[i];
+        if(hitTestRectangle(sleigh,face) && face.visible){
+            facesCollected ++;
+            face.visible = false;
         }
-        if(star.visible){
-            if(star.aRot >= 45){
-                star.rF = false;            
+        if(face.visible){
+            if(face.aRot >= 45){
+                face.rF = false;            
             }
-            else if(star.aRot <= -45){
-                star.rF = true;
+            else if(face.aRot <= -45){
+                face.rF = true;
             }
-            if(star.rF){
-                star.aRot += 0.7;
+            if(face.rF){
+                face.aRot += 0.7;
             }
             else{
-                star.aRot -= 0.7;
+                face.aRot -= 0.7;
             }
-            star.rotation = star.aRot;
+            face.rotation = face.aRot;
         }
         
     }
-    if(starsCollected === stars.length){
+    if(facesCollected === faces.length){
         gameState = OVER;
     }
 }
@@ -242,13 +243,13 @@ function buildMap(array){
             // console.log(tile);
             if(tile != EMPTY){
                 switch(tile){
-                    case TREE:
-                        tree = Object.create(spriteObject);
-                        tree.sourceX = 1152;
-                        tree.x = column * SIZE;
-                        tree.y = row * SIZE;
-                        tree.isOnGround = true;
-                        sprites.push(tree);
+                    case SLEIGH:
+                        sleigh = Object.create(spriteObject);
+                        sleigh.sourceX = 1152;
+                        sleigh.x = column * SIZE;
+                        sleigh.y = row * SIZE;
+                        sleigh.isOnGround = true;
+                        sprites.push(sleigh);
                         break;
                     case ICE:
                         let ice = Object.create(spriteObject);
@@ -259,14 +260,14 @@ function buildMap(array){
                         ices.push(ice);
                         sprites.push(ice);
                         break;
-                    case STAR:
-                        star = Object.create(spriteObject);
-                        star.sourceX = 1088;
-                        star.x = column * SIZE;
-                        star.y = row * SIZE;
-                        star.rotation = 90;
-                        stars.push(star);
-                        sprites.push(star);
+                    case FACE:
+                        face = Object.create(spriteObject);
+                        face.sourceX = 1088;
+                        face.x = column * SIZE;
+                        face.y = row * SIZE;
+                        face.rotation = 90;
+                        faces.push(face);
+                        sprites.push(face);
                         break;
                 }
             }
