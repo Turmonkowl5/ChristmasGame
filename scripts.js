@@ -17,6 +17,7 @@ let faces = [];
 //! Game Variables
 let assetsLoaded = 0;
 let facesCollected = 0;
+let faceNum = 0;
 // GameStates
 let LOADING = 0;
 let PLAYING = 1;
@@ -67,7 +68,6 @@ window.addEventListener("keyup", function(event){
 let EMPTY = 0;
 let ICE = 1;
 let FACE = 2;
-let faceNum = 0;
 let SLEIGH = 3;
 let ROWS = 12;
 let COLUMNS = 16;
@@ -103,7 +103,7 @@ let objects1 = [
 ];
 // Creat image
 let image = new Image();
-image.src = "images/frfrLastSpriteSheet.png";
+image.src = "images/f1spritesheet.png";
 image.addEventListener("load",loadHandler, false);
 assetsToLoad.push(image);
 // Create backgroun
@@ -264,10 +264,13 @@ function buildMap(array){
                         break;
                     case FACE:
                         face = Object.create(spriteObject);
-                        face.sourceX = 1088;
+                        face.sourceX = 1216 + faceNum * 500;
+                        face.sourceWidth = 500;
+                        face.sourceHeight = 500;
                         face.x = column * SIZE;
                         face.y = row * SIZE;
                         face.rotation = 90;
+                        faceNum ++;
                         faces.push(face);
                         sprites.push(face);
                         break;
