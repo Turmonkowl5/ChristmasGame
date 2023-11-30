@@ -155,9 +155,11 @@ function playGame(){
     //! Movement code
     if(moveLeft && !moveRight){
         sleigh.vx = -accel;
+        sleigh.flip = -1;
     }
     if(moveRight && !moveLeft){
         sleigh.vx = accel;
+        sleigh.flip = 1;
     }
     if(jump && sleigh.isOnGround){
         sleigh.vy += sleigh.jumpForce;
@@ -290,20 +292,30 @@ function render(){
                     ctx.translate(
                         Math.floor(sprite.x + (sprite.width / 2)),
                         Math.floor(sprite.y + (sprite.height / 2))
-                    );
-                    ctx.rotate(sprite.rotation * Math.PI / 180);
-                    ctx.drawImage(
-                        image,
-                        Math.floor(sprite.sourceX), Math.floor(sprite.sourceY), Math.floor(sprite.sourceWidth), Math.floor(sprite.sourceHeight),
-                        Math.floor(-sprite.halfWidth()), Math.floor(-sprite.halfHeight()), Math.floor(sprite.width), Math.floor(sprite.height)
-                    );    
-                }
+                        );
+                        ctx.rotate(sprite.rotation * Math.PI / 180);
+                        ctx.drawImage(
+                            image,
+                            Math.floor(sprite.sourceX), Math.floor(sprite.sourceY), Math.floor(sprite.sourceWidth), Math.floor(sprite.sourceHeight),
+                            Math.floor(-sprite.halfWidth()), Math.floor(-sprite.halfHeight()), Math.floor(sprite.width), Math.floor(sprite.height)
+                            );    
+                        }
                 else{
-                    ctx.drawImage(
-                        image,
-                        Math.floor(sprite.sourceX), Math.floor(sprite.sourceY), Math.floor(sprite.sourceWidth), Math.floor(sprite.sourceHeight),
-                        Math.floor(sprite.x), Math.floor(sprite.y), Math.floor(sprite.width), Math.floor(sprite.height)
-                    );
+                    if(sprite.flip === -1){
+                        ctx.scale(sprite.flip, 1);
+                        ctx.drawImage(
+                            image,
+                            Math.floor(sprite.sourceX), Math.floor(sprite.sourceY), Math.floor(sprite.sourceWidth), Math.floor(sprite.sourceHeight),
+                            Math.floor(-sprite.x - sprite.width), Math.floor(sprite.y), Math.floor(sprite.width), Math.floor(sprite.height)
+                        );
+                    }
+                    else{
+                        ctx.drawImage(
+                            image,
+                            Math.floor(sprite.sourceX), Math.floor(sprite.sourceY), Math.floor(sprite.sourceWidth), Math.floor(sprite.sourceHeight),
+                            Math.floor(sprite.x), Math.floor(sprite.y), Math.floor(sprite.width), Math.floor(sprite.height)
+                        );
+                    }
                 }
                 ctx.restore();
             }

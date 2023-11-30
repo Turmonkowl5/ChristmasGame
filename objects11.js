@@ -3,6 +3,7 @@ let spriteObject = {
     sourceY: 0,
     sourceWidth: 64,
     sourceHeight: 64,
+    flip: 1,
     width: 64,
     height: 64,
     x: 0,
