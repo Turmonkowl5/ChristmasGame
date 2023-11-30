@@ -4,16 +4,6 @@
     position: relative;
     height: 768;
 }
-#gameMessage{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    translate: -50% -160%;
-    font-size: 128px;
-    color: rgb(154, 37, 24);
-    background-color: rgba(14, 231, 3, 0.722);
-    border-radius: 30px;
-}
 body{
     background-color:cadetblue
 }

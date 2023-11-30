@@ -7,8 +7,6 @@ let ctx = canvas.getContext("2d");
 // Set the stage width and height to match that of the canvas
 stage.style.width = canvas.width + "px";
 stage.style.height = canvas.height + "px";
-// Position Text
-let output = document.querySelector("#gameMessage");
 //! Arrays
 let sprites = [];
 let assetsToLoad = [];
@@ -73,16 +71,16 @@ let ROWS = 12;
 let COLUMNS = 16;
 let SIZE = 64;
 let map1 = [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [1,1,2,0,1,1,0,1,1,1,0,2,0,0,0,0],
+    [1,1,0,0,1,1,0,1,1,1,0,0,2,0,0,0],
     [0,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0],
-    [2,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
-    [1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1],
-    [1,1,0,0,0,0,1,1,1,1,0,0,0,2,1,1],
-    [1,1,1,2,0,0,0,1,1,1,1,1,1,1,1,1],
+    [0,2,0,0,0,0,0,0,0,0,1,1,1,1,1,0],
+    [0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
+    [1,0,0,0,1,1,1,1,1,0,0,2,0,0,0,1],
+    [1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1],
+    [1,1,1,0,2,0,0,1,1,1,1,1,1,1,1,1],
     [1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1],
     [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1]
 ];
@@ -266,6 +264,8 @@ function buildMap(array){
                         face = Object.create(spriteObject);
                         face.sourceX = 1216 + faceNum * 500;
                         face.sourceWidth = 500;
+                        face.width = 128;
+                        face.height = 128;
                         face.sourceHeight = 500;
                         face.x = column * SIZE;
                         face.y = row * SIZE;
@@ -281,7 +281,6 @@ function buildMap(array){
     gameState = PLAYING;
 }
 function endGame(){
-    output.innerHTML = "Happy Holidays";
     render();
 }
 function render(){
