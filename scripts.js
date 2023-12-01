@@ -4,10 +4,12 @@ let stage = document.querySelector("#stage");
 let canvas = document.querySelector("canvas");
 // Get canvas context
 let ctx = canvas.getContext("2d");
+let p = "/sounds.Git Please dont delete.txt";
+
 // Set the stage width and height to match that of the canvas
 stage.style.width = canvas.width + "px";
 stage.style.height = canvas.height + "px";
-// Button
+// Button 
 let startB = document.querySelector("#start");
 startB.addEventListener("click", clickHandler, false);
 //! Arrays
@@ -123,19 +125,19 @@ logo.height = 49;
 logo.x = 736;
 logo.y = 74;
 // Jump sound
-let jumpSound = document.querySelector("#jump");
-jumpSound.addEventListener("canplaythrough", loadHandler,false);
-jumpSound.load();
+let jumpSound = new Audio();
+jumpSound.src = "sounds/jump.mp3";
+jumpSound.addEventListener("canplaythrough", loadHandler, false);
 assetsToLoad.push(jumpSound);
 // Score sound
-let scoreSound = document.querySelector("#score");
+let scoreSound = new Audio();
+scoreSound.src = "sounds/score.mp3";
 scoreSound.addEventListener("canplaythrough", loadHandler, false);
-scoreSound.load();
 assetsToLoad.push(scoreSound);
 // music
-let music = document.querySelector("#music");
+let music = new Audio();
+music.src = "sounds/song.mp3";
 music.addEventListener("canplaythrough", loadHandler, false);
-music.load();
 assetsToLoad.push(music);
 // facet update loop
 update();
@@ -183,8 +185,8 @@ function clickHandler(){
         music.volume = 1;
         music.play();
         gameState = BUILDING;
+        startB.remove();
     }
-    startB.remove();
 }
 // Called when game should be played
 function playGame(){
