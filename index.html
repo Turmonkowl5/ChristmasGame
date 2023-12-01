@@ -7,7 +7,13 @@
     <title>Christmas Game</title>
 </head>
 <body>
+    <audio id="jump">
+        <source src="/sounds/jump.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="music" src="/sounds/song.mp3" type="audio.mpeg" loop></audio>
+    <audio id="score" src="/sounds/score.mp3" type="audio/mpeg"></audio>
     <div id="stage">
+        <button id="start">Start Game</button>
         <canvas width="1024" height="768"></canvas>
     </div>
     <script src="collision_let.js"></script>
