@@ -117,13 +117,13 @@ let sleigh = null;
 let face = null;
 // Create logo
 let logo = Object.create(spriteObject);
-logo.sourceX = 5234;
+logo.sourceX = 5235;
 logo.sourceWidth = 192;
 logo.sourceHeight = 49;
 logo.width = 192;
 logo.height = 49;
-logo.x = 736;
-logo.y = 74;
+logo.x = 760;
+logo.y = 135;
 // Jump sound
 let jumpSound = new Audio();
 jumpSound.src = "sounds/jump.mp3";
@@ -139,6 +139,11 @@ let music = new Audio();
 music.src = "sounds/song.mp3";
 music.addEventListener("canplaythrough", loadHandler, false);
 assetsToLoad.push(music);
+// Fanfare
+let fanfare = new Audio();
+fanfare.src = "sounds/fanfare.mp3";
+fanfare.addEventListener("canplaythrough", loadHandler, false);
+assetsToLoad.push(fanfare);
 // facet update loop
 update();
 // ! Functions
@@ -153,7 +158,6 @@ function update(){
             render();
             break;
         case OVER:
-            sprites = [];
             endGame();
             render();
             break;
@@ -276,7 +280,15 @@ function playGame(){
         }
         
     }
+    // ! End Game
     if(facesCollected === faces.length){
+        sprites = [];
+        background.sourceX = 3716;
+        background.sourceWidth = 1518;
+        background.sourceHeight = 1139;
+        sprites.push(background);
+        sprites.push(logo);
+        fanfare.play();
         gameState = OVER;
     }
 }
@@ -327,22 +339,17 @@ function buildMap(array){
     gameState = PLAYING;
 }
 function endGame(){
-    background.sourceX = 3716;
-    background.sourceWidth = 1518;
-    background.sourceHeight = 1139;
-    sprites.push(background);
-    sprites.push(logo);
-    if(logo.aRot >= 45){
+    if(logo.aRot >= 25){
         logo.rF = false;
     }
-    else if(logo.aRot<= -45){
+    else if(logo.aRot<= -25){
         logo.rF = true;
     }
     if(logo.rF){
-        logo.aRot += 0.7;
+        logo.aRot += 0.4;
     }
     else{
-        logo.aRot -= 0.7;
+        logo.aRot -= 0.4;
     }
     logo.rotation = logo.aRot;
 }
