@@ -12,6 +12,8 @@ stage.style.height = canvas.height + "px";
 // Button 
 let startB = document.querySelector("#start");
 startB.addEventListener("click", clickHandler, false);
+// Instruction text
+let text = document.querySelector("h1");
 //! Arrays
 let sprites = [];
 let assetsToLoad = [];
@@ -72,6 +74,7 @@ let EMPTY = 0;
 let ICE = 1;
 let FACE = 2;
 let SLEIGH = 3;
+let CRL = 4;
 let ROWS = 12;
 let COLUMNS = 16;
 let SIZE = 64;
@@ -82,12 +85,12 @@ let map1 = [
     [1,1,0,0,1,1,0,1,1,1,0,0,2,0,0,0],
     [0,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0],
     [0,2,0,0,0,0,0,0,0,0,1,1,1,1,1,0],
-    [0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
-    [1,0,0,0,1,1,1,1,1,0,0,2,0,0,0,1],
-    [1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1],
-    [1,1,1,0,2,0,0,1,1,1,1,1,1,1,1,1],
-    [1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1],
-    [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1]
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,1],
+    [1,0,0,0,0,0,1,1,1,1,0,0,0,0,1,1],
+    [1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,0,2,0,0,0,1,1,0,0,0,1,1],
+    [1,1,1,1,1,0,0,0,0,1,0,4,0,0,0,1]
 ];
 let objects1 = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -116,15 +119,7 @@ let sleigh = null;
 // face
 let face = null;
 // Create logo
-let logo = Object.create(spriteObject);
-logo.sourceX = 5235;
-logo.sourceWidth = 192;
-logo.sourceHeight = 49;
-logo.width = 192;
-logo.height = 49;
-logo.x = 760;
-logo.y = 135;
-// Jump sound
+let logo = null;
 let jumpSound = new Audio();
 jumpSound.src = "sounds/jump.mp3";
 jumpSound.addEventListener("canplaythrough", loadHandler, false);
@@ -190,6 +185,7 @@ function clickHandler(){
         music.play();
         gameState = BUILDING;
         startB.remove();
+        text.remove();
     }
 }
 // Called when game should be played
@@ -280,12 +276,28 @@ function playGame(){
         }
         
     }
+    // Logo rotation
+    if(logo.aRot >= 20){
+        logo.rF = false;
+    }
+    else if(logo.aRot<= -20){
+        logo.rF = true;
+    }
+    if(logo.rF){
+        logo.aRot += 0.223;
+    }
+    else{
+        logo.aRot -= 0.223;
+    }
+    logo.rotation = logo.aRot;
     // ! End Game
     if(facesCollected === faces.length){
         sprites = [];
         background.sourceX = 3716;
         background.sourceWidth = 1518;
         background.sourceHeight = 1139;
+        logo.x = 760;
+        logo.y = 135;
         sprites.push(background);
         sprites.push(logo);
         fanfare.play();
@@ -331,6 +343,17 @@ function buildMap(array){
                         faceNum ++;
                         faces.push(face);
                         sprites.push(face);
+                        break;
+                    case CRL:
+                        logo = Object.create(spriteObject);
+                        logo.sourceX = 5235;
+                        logo.sourceWidth = 192;
+                        logo.sourceHeight = 49;
+                        logo.width = 192;
+                        logo.height = 49;
+                        logo.x = column * SIZE;
+                        logo.y = row * SIZE - SIZE/2;
+                        sprites.push(logo);
                         break;
                 }
             }

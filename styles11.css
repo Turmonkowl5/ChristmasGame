@@ -4,7 +4,7 @@
     height: 768;
 }
 body{
-    background-color:cadetblue
+    background-color:tan;
 }
 img{
     position: absolute;
@@ -86,3 +86,35 @@ button {
          -o-transition: 50ms linear;
             transition: 50ms linear;
   }
+  h1 {
+    --color1: red;
+    --color2: green;
+    font-family: "Open Sans", sans-serif;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    text-align: center;
+    transform: translate(-25% -25%);
+    font-size: 46px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--color1),
+      var(--color1) 30px,
+      var(--color2) 30px,
+      var(--color2) 60px
+    );
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+    animation: 40s linear 0s infinite move;
+  }
+  
+  @keyframes move {
+    from {
+      background-position: 0px;
+    }
+    to {
+      background-position: 1000px;
+    }
+  }
+  
