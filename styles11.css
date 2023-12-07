@@ -4,7 +4,7 @@
     height: 768;
 }
 body{
-    background-color:tan;
+    background-color:darkslategray;
 }
 img{
     position: absolute;
@@ -37,8 +37,8 @@ button {
       1px 1px 3px rgba(0,0,0,0.75); /* shadow */
       
     position: relative;
-    top:50%;
-    left: 50%;
+    top:70%;
+    left: 48%;
     translate: -50% -50%;
     overflow: visible; /* IE9 & 10 */
     -webkit-transition: 500ms linear;
@@ -87,15 +87,14 @@ button {
             transition: 50ms linear;
   }
   h1 {
-    --color1: red;
-    --color2: green;
+    --color1: powderblue;
+    --color2: white;
     font-family: "Open Sans", sans-serif;
     position: absolute;
-    left: 10%;
-    top: 10%;
+    width: 1000px;
     text-align: center;
     transform: translate(-25% -25%);
-    font-size: 46px;
+    font-size: 86px;
     background: repeating-linear-gradient(
       45deg,
       var(--color1),
@@ -106,7 +105,7 @@ button {
     background-clip: text;
     color: transparent;
     -webkit-background-clip: text;
-    animation: 40s linear 0s infinite move;
+    animation: 60s linear 0s infinite move;
   }
   
   @keyframes move {
